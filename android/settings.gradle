@@ -1,0 +1,3 @@
+rootProject.name = 'homeless_app'
+
+include ':app'

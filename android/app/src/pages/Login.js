@@ -1,19 +1,16 @@
-/**
- * Created by arsen on 11.04.17.
- */
 import React, {Component} from "react";
 
 import {Alert, ScrollView, StyleSheet, TextInput, View, Image} from "react-native";
 import Container from "../components/Container";
 import Button from "../components/Button";
 import Label from "../components/Label";
-import MainScreen from './MainScreen';
+
 //npm i --save base-64
 const btoa = require('base-64');
 
 export default class Login extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {login: '', password: '', success: false};
     }
 
@@ -25,59 +22,71 @@ export default class Login extends Component {
             },
         }).then((response) => response.json())
             .then((responseData) => {
-           Alert.alert("Authorization Info", responseData.success.toString())
+               // Alert.alert("Authorization Info", responseData.success.toString());
+                if (responseData.success){
+                   this.navigate(this, 'mainScreen')
+                }
             })
             .done();
 
     }
+    navigate(routeName){
+        this.props.navigator.push({
+            name:routeName
+        }
+        )
 
+
+    }
 
     render() {
+
         return (
+
 
             <ScrollView style={styles.scroll}>
 
                 <View style={{flex:1,alignItems:'center', marginTop:80}}>
-                <Image source={require('../img/login_logo.png')} style={styles.logoStyle}/>
+                    <Image source={require('../img/login_logo.png')} style={styles.logoStyle}/>
                 </View>
 
                 <View style={{
                     marginTop:120/* Pack items from the end */
                 }}>
 
-                <Container>
-                    <View style={styles.centerAlign}>
-                    <Label text='Login'/>
-                    </View>
-                    <TextInput
-                        style={styles.textInput}
-                        onChangeText={(login) => this.setState({login})}
-                        value={this.state.login}
-                    />
-                </Container>
-
-                <Container>
-                    <View style={styles.centerAlign}>
-                    <Label text="Password"/>
-                    </View>
-                    <TextInput
-                        secureTextEntry={true}
-                        style={styles.textInput}
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
-                    />
-                </Container>
-
-                <View style={styles.footer}>
-
                     <Container>
-                        <Button
-                            label="Sign In"
-                            styles={{button: styles.primaryButton, label: styles.buttonWhiteText}}
-                            onPress={Login.press.bind(this)} title="Signing in"/>
+                        <View style={styles.centerAlign}>
+                            <Label text='Login'/>
+                        </View>
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(login) => this.setState({login})}
+                            value={this.state.login}
+                        />
                     </Container>
 
-                </View>
+                    <Container>
+                        <View style={styles.centerAlign}>
+                            <Label text="Password"/>
+                        </View>
+                        <TextInput
+                            secureTextEntry={true}
+                            style={styles.textInput}
+                            onChangeText={(password) => this.setState({password})}
+                            value={this.state.password}
+                        />
+                    </Container>
+
+                    <View style={styles.footer}>
+
+                        <Container>
+                            <Button
+                                label="Sign In"
+                                styles={{button: styles.primaryButton, label: styles.buttonWhiteText}}
+                                onPress={Login.press.bind(this)} title="Signing in"/>
+                        </Container>
+
+                    </View>
 
                 </View>
 
@@ -87,10 +96,7 @@ export default class Login extends Component {
         );
     }
 }
-const routes = [
-    {title: 'Login Scene', index: 0},
-    {title: 'Second Scene', index: 1},
-];
+
 const styles = StyleSheet.create({
     logoStyle: {
         flex: 1,

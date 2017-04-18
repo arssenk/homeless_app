@@ -3,7 +3,7 @@ import {
     AppRegistry
 } from 'react-native';
 
-import Login from './src/pages/Login';
+import Login from './android/app/src/pages/Login';
 
 export default class ReactNativeCommonScreens extends Component {
 

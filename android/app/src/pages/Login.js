@@ -7,14 +7,14 @@ import {Alert, ScrollView, StyleSheet, TextInput, View, Image} from "react-nativ
 import Container from "../components/Container";
 import Button from "../components/Button";
 import Label from "../components/Label";
-
+import MainScreen from './MainScreen';
 //npm i --save base-64
 const btoa = require('base-64');
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {login: '', password: ''};
+        this.state = {login: '', password: '', success: false};
     }
 
     static press() {
@@ -25,9 +25,10 @@ export default class Login extends Component {
             },
         }).then((response) => response.json())
             .then((responseData) => {
-                Alert.alert("Authorization Info", responseData.success.toString())
+           Alert.alert("Authorization Info", responseData.success.toString())
             })
             .done();
+
     }
 
 
@@ -37,7 +38,7 @@ export default class Login extends Component {
             <ScrollView style={styles.scroll}>
 
                 <View style={{flex:1,alignItems:'center', marginTop:80}}>
-                <Image source={require('../img/login_logo.png')} />
+                <Image source={require('../img/login_logo.png')} style={styles.logoStyle}/>
                 </View>
 
                 <View style={{
@@ -86,14 +87,23 @@ export default class Login extends Component {
         );
     }
 }
-
+const routes = [
+    {title: 'Login Scene', index: 0},
+    {title: 'Second Scene', index: 1},
+];
 const styles = StyleSheet.create({
+    logoStyle: {
+        flex: 1,
+        width: 309,
+        height: 50,
+        resizeMode: 'contain'
+    },
     centerAlign: {
         justifyContent: 'center',
         alignItems: 'center',
     },
     scroll: {
-        backgroundColor: '#E1D7D8',
+        backgroundColor: '#E0E0E0',
         padding: 20,
         flexDirection: 'column'
     },
@@ -120,7 +130,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     textInput: {
-        height: 40,
+        height: 55,
         fontSize: 17,
     },
 });
